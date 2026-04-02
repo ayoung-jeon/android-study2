@@ -13,15 +13,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.todolist.databinding.ActivityMainBinding
+import com.example.todolist.db.AppDatabase
+import com.example.todolist.db.TodoDao
+import com.example.todolist.db.TodoEntity
 import com.example.todolist.ui.theme.TodoListTheme
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
+    private lateinit var db : AppDatabase
+    private lateinit var todoDao: TodoDao
+    private lateinit var todoList: ArrayList<TodoEntity>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        db = AppDatabase.getInstance(this)!!
+        todoDao = db.getTodoDao()
+
+        getAllTodoList()
+    }
+
+    private fun getAllTodoList() {
+        Thread {
+            todoList = ArrayList(todoDao.getAllTodo())
+            setRecyclerView()
+        }
+    }
+
+    private fun setRecyclerView() {
+
     }
 }

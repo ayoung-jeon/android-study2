@@ -14,30 +14,10 @@ class AddTodoActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityAddTodoBinding
 
-    private lateinit var db : AppDatabase
-    private lateinit var todoDao: TodoDao
-    private lateinit var todoList: ArrayList<TodoEntity>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityAddTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        db = AppDatabase.getInstance(this)!!
-        todoDao = db.getTodoDao()
-
-        getAllTodoList()
-    }
-
-    private fun getAllTodoList() {
-        Thread {
-            todoList = ArrayList(todoDao.getAllTodo())
-            setRecyclerView()
-        }
-    }
-
-    private fun setRecyclerView() {
-        
     }
 }
